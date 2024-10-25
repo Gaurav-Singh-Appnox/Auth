@@ -3,6 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { registerUser } from "../store/slicer/authSlice";
 import { useDispatch } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const schema = yup.object({
   fname: yup.string().required("Please provide your first name."),
@@ -25,10 +27,26 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
+  const registerWithGoogle = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      try {
+        const res = await axios.get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`
+        );
+        console.log("Google User Info:", res.data);
+        // Handle Google registration (e.g., dispatch an action with user data)
+        // For example: dispatch(googleRegisterAction(res.data));
+      } catch (error) {
+        console.log("Google registration failed:", error);
+      }
+    },
+    onError: (error) => console.log("Google Registration Failed:", error),
+  });
+
   const onSubmit = async (data) => {
-    console.log("submit clicked", data);
     try {
       await dispatch(registerUser(data)).unwrap();
+      // Optionally handle registration success (e.g., navigate or show a message)
     } catch (error) {
       console.log("Registration failed", error);
     }
@@ -38,7 +56,10 @@ const Register = () => {
     <div className="max-w-[600px] w-[80vw] mx-auto mt-8 shadow-md rounded-md p-8">
       <p>Register</p>
       <div className="mt-2 h-[2px] bg-gray-400" />
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mt-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 mt-6"
+      >
         <label>
           First Name:
           <input className="outline ml-4" {...register("fname")} />
@@ -56,7 +77,11 @@ const Register = () => {
         </label>
         <label>
           Password:
-          <input type="password" className="outline ml-4" {...register("password")} />
+          <input
+            type="password"
+            className="outline ml-4"
+            {...register("password")}
+          />
           <p>{errors.password?.message}</p>
         </label>
         <label>
@@ -70,6 +95,12 @@ const Register = () => {
         </label>
         <input className="border-2 border-black" type="submit" />
       </form>
+      <button
+        onClick={registerWithGoogle}
+        className="mt-4 border-2 border-black p-2 rounded"
+      >
+        Register with Google 🚀
+      </button>
     </div>
   );
 };
