@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-[600px] w-[80vw] mx-auto mt-8 shadow-md rounded-md p-8">
+    <div className="max-w-[600px] w-[80vw] mx-auto mt-8 shadow-md rounded-md p-8 bg-slate-300">
       <p>Login</p>
       <div className="mt-2 h-[2px] bg-gray-400" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mt-6">
@@ -58,9 +58,9 @@ const Login = () => {
           <input className="outline w-full p-2 rounded" type="password" {...register("password")} />
           <p className="text-red-500">{errors.password?.message}</p>
         </label>
-        <input className="border-2 border-black p-2 rounded" type="submit" />
+        <input className="border-2 border-black p-2 rounded bg-blue-400 hover:bg-blue-600 hover:scale-105 transition-all" type="submit" />
       </form>
-      <button onClick={loginWithGoogle} className="mt-4 border-2 border-black p-2 rounded">
+      <button onClick={loginWithGoogle} className="mt-4 border-2 border-black p-2 rounded ">
         Sign in with Google 🚀
       </button>
     </div>

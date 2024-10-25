@@ -53,51 +53,51 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-[600px] w-[80vw] mx-auto mt-8 shadow-md rounded-md p-8">
+    <div className="max-w-[600px] w-[80vw] mx-auto mt-8 shadow-md rounded-md p-8 bg-slate-300">
       <p>Register</p>
       <div className="mt-2 h-[2px] bg-gray-400" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 mt-6"
       >
-        <label>
-          First Name:
-          <input className="outline ml-4" {...register("fname")} />
+        <label className="flex flex-col gap-1">
+          <span>First Name:</span>
+          <input className="outline rounded-md p-2" {...register("fname")} />
           <p>{errors.fname?.message}</p>
         </label>
-        <label>
-          Last Name:
-          <input className="outline ml-4" {...register("lname")} />
+        <label className="flex flex-col gap-1">
+          <span>Last Name:</span>
+          <input className="outline rounded-md p-2" {...register("lname")} />
           <p>{errors.lname?.message}</p>
         </label>
-        <label>
-          Email:
-          <input className="outline ml-4" {...register("email")} />
+        <label className="flex flex-col gap-1">
+          <span>Email:</span>
+          <input className="outline rounded-md p-2" {...register("email")} />
           <p>{errors.email?.message}</p>
         </label>
-        <label>
-          Password:
+        <label className="flex flex-col gap-1">
+          <span>Password:</span>
           <input
             type="password"
-            className="outline ml-4"
+            className="outline rounded-md p-2"
             {...register("password")}
           />
           <p>{errors.password?.message}</p>
         </label>
-        <label>
-          Confirm Password:
+        <label className="flex flex-col gap-1">
+          <span>Confirm Password:</span>
           <input
             type="password"
-            className="outline ml-4"
+            className="outline rounded-md p-2"
             {...register("password_confirmation")}
           />
           <p>{errors.password_confirmation?.message}</p>
         </label>
-        <input className="border-2 border-black" type="submit" />
+        <input className="border-2 border-black p-2 rounded-md bg-blue-400 hover:bg-blue-600 hover:scale-105 transition-all" type="submit" />
       </form>
       <button
         onClick={registerWithGoogle}
-        className="mt-4 border-2 border-black p-2 rounded"
+        className="mt-4 border-2 border-black p-2 rounded bg-blue-400 hover:bg-blue-600 hover:scale-105 transition-all"
       >
         Register with Google 🚀
       </button>
