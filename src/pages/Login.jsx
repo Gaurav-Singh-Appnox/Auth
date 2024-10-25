@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { login } from "../store/slicer/authSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -11,6 +12,7 @@ const schema = yup.object({
 
 const Login = () => {
   const Dispatch = useDispatch();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -22,6 +24,8 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await Dispatch(login(data)).unwrap();
+      navigate('/')
+
     } catch (error) {
       console.log("login failed", error);
     }
@@ -35,18 +39,24 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 mt-6"
       >
-        <label>
-          Email
-          <input className="outline ml-4" {...register("email")} />
-          <p>{errors.email?.message}</p>
+        <label className="flex flex-col">
+          <span className="mb-2">Email :</span>
+          <input
+            className="outline  w-full p-2 rounded"
+            {...register("email")}
+          />
+          <p className="text-red-500">{errors.email?.message}</p>
         </label>
-        <label>
+        <label className="flex flex-col">
           {" "}
-          Password
-          <input className="outline ml-4" {...register("password")} />
-          <p>{errors.password?.message}</p>
+          <span className="mb-2">Password :</span>
+          <input
+            className="outline  w-full p-2 rounded"
+            {...register("password")}
+          />
+          <p className="text-red-500">{errors.password?.message}</p>
         </label>
-        <input className="border-2 border-black" type="submit" />
+        <input className="border-2 border-black p-2 rounded" type="submit" />
       </form>
     </div>
   );
